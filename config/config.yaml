@@ -1,0 +1,13 @@
+# Runtime parameters — AgentRegistry loads this file separately from config/agent.yaml
+# and passes its contents as Graph(config=...). The static discovery manifest
+# (config/agent.yaml) must not carry runtime-tunable parameters.
+max_retry: 3
+timeout_seconds: 30
+# Default; MUST be true (per-call or config) to admit a safety-critical equipment_category.
+# The value here matches the code-side default (input_validate_node.py: cfg.get(..., False)),
+# so relocating it from the manifest does not change behaviour.
+safety_review_acknowledged: false
+# The MANDATORY safety gate classifies by the structured equipment_category token against a
+# FIXED code-side set (src/nodes/input_validate_node.py::_DEFAULT_SAFETY_CRITICAL_CATEGORIES).
+# There is NO config override in V1 — the closed vocabulary and its critical members are
+# code-owned. Every FMEA is review-required regardless of category.
